@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pratham_clone/core/theme.dart';
+import 'package:pratham_clone/data/database/database_provider.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
@@ -38,12 +41,18 @@ class _LoginScreenState extends State<LoginScreen> {
       _errorMessage = null;
     });
 
-    // simulation - on branchera la vraie DB plus tard
-    await Future.delayed(const Duration(seconds: 1));
+    final db = ref.read(databaseProvider);
+    final crl = await db.checkCredentials(username, password);
+
+    if (!mounted) return;
 
     setState(() => _isLoading = false);
 
-    // TODO: vérifier les identifiants en DB et naviguer
+    if (crl != null) {
+      context.go('/home');
+    } else {
+      setState(() => _errorMessage = 'Identifiants incorrects');
+    }
   }
 
   @override
