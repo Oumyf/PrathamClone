@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:pratham_clone/features/assessment/screens/select_institution_screen.dart';
+import 'package:pratham_clone/features/assessment/screens/select_school_screen.dart';
 import 'package:pratham_clone/features/assessment/screens/select_municipality_screen.dart';
 import 'package:pratham_clone/features/auth/screens/login_screen.dart';
 import 'package:pratham_clone/features/home/screens/home_screen.dart';
@@ -28,6 +29,12 @@ final appRouter = GoRouter(
       path: '/assessment/institution',
       builder: (context, state) => SelectInstitutionScreen(
         municipalityId: state.extra as String,
+      ),
+    ),
+      GoRoute(
+      path: '/assessment/school',
+      builder: (context, state) => SelectSchoolScreen(
+        instituteId: state.extra as String,
       ),
     ),
   ],

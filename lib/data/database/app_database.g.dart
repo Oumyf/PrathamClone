@@ -1548,6 +1548,439 @@ class InstituteTableCompanion extends UpdateCompanion<InstituteTableData> {
   }
 }
 
+class $SchoolTableTable extends SchoolTable
+    with TableInfo<$SchoolTableTable, SchoolTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SchoolTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _schoolIdMeta = const VerificationMeta(
+    'schoolId',
+  );
+  @override
+  late final GeneratedColumn<String> schoolId = GeneratedColumn<String>(
+    'school_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _schoolNameMeta = const VerificationMeta(
+    'schoolName',
+  );
+  @override
+  late final GeneratedColumn<String> schoolName = GeneratedColumn<String>(
+    'school_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _instituteIdMeta = const VerificationMeta(
+    'instituteId',
+  );
+  @override
+  late final GeneratedColumn<String> instituteId = GeneratedColumn<String>(
+    'institute_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _pushFlagMeta = const VerificationMeta(
+    'pushFlag',
+  );
+  @override
+  late final GeneratedColumn<int> pushFlag = GeneratedColumn<int>(
+    'push_flag',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _createdDateMeta = const VerificationMeta(
+    'createdDate',
+  );
+  @override
+  late final GeneratedColumn<String> createdDate = GeneratedColumn<String>(
+    'created_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    schoolId,
+    schoolName,
+    instituteId,
+    pushFlag,
+    createdDate,
+    createdBy,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'school_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SchoolTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('school_id')) {
+      context.handle(
+        _schoolIdMeta,
+        schoolId.isAcceptableOrUnknown(data['school_id']!, _schoolIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_schoolIdMeta);
+    }
+    if (data.containsKey('school_name')) {
+      context.handle(
+        _schoolNameMeta,
+        schoolName.isAcceptableOrUnknown(data['school_name']!, _schoolNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_schoolNameMeta);
+    }
+    if (data.containsKey('institute_id')) {
+      context.handle(
+        _instituteIdMeta,
+        instituteId.isAcceptableOrUnknown(
+          data['institute_id']!,
+          _instituteIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_instituteIdMeta);
+    }
+    if (data.containsKey('push_flag')) {
+      context.handle(
+        _pushFlagMeta,
+        pushFlag.isAcceptableOrUnknown(data['push_flag']!, _pushFlagMeta),
+      );
+    }
+    if (data.containsKey('created_date')) {
+      context.handle(
+        _createdDateMeta,
+        createdDate.isAcceptableOrUnknown(
+          data['created_date']!,
+          _createdDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {schoolId};
+  @override
+  SchoolTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SchoolTableData(
+      schoolId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}school_id'],
+      )!,
+      schoolName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}school_name'],
+      )!,
+      instituteId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}institute_id'],
+      )!,
+      pushFlag: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}push_flag'],
+      )!,
+      createdDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_date'],
+      ),
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      ),
+    );
+  }
+
+  @override
+  $SchoolTableTable createAlias(String alias) {
+    return $SchoolTableTable(attachedDatabase, alias);
+  }
+}
+
+class SchoolTableData extends DataClass implements Insertable<SchoolTableData> {
+  final String schoolId;
+  final String schoolName;
+  final String instituteId;
+  final int pushFlag;
+  final String? createdDate;
+  final String? createdBy;
+  const SchoolTableData({
+    required this.schoolId,
+    required this.schoolName,
+    required this.instituteId,
+    required this.pushFlag,
+    this.createdDate,
+    this.createdBy,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['school_id'] = Variable<String>(schoolId);
+    map['school_name'] = Variable<String>(schoolName);
+    map['institute_id'] = Variable<String>(instituteId);
+    map['push_flag'] = Variable<int>(pushFlag);
+    if (!nullToAbsent || createdDate != null) {
+      map['created_date'] = Variable<String>(createdDate);
+    }
+    if (!nullToAbsent || createdBy != null) {
+      map['created_by'] = Variable<String>(createdBy);
+    }
+    return map;
+  }
+
+  SchoolTableCompanion toCompanion(bool nullToAbsent) {
+    return SchoolTableCompanion(
+      schoolId: Value(schoolId),
+      schoolName: Value(schoolName),
+      instituteId: Value(instituteId),
+      pushFlag: Value(pushFlag),
+      createdDate: createdDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdDate),
+      createdBy: createdBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdBy),
+    );
+  }
+
+  factory SchoolTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SchoolTableData(
+      schoolId: serializer.fromJson<String>(json['schoolId']),
+      schoolName: serializer.fromJson<String>(json['schoolName']),
+      instituteId: serializer.fromJson<String>(json['instituteId']),
+      pushFlag: serializer.fromJson<int>(json['pushFlag']),
+      createdDate: serializer.fromJson<String?>(json['createdDate']),
+      createdBy: serializer.fromJson<String?>(json['createdBy']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'schoolId': serializer.toJson<String>(schoolId),
+      'schoolName': serializer.toJson<String>(schoolName),
+      'instituteId': serializer.toJson<String>(instituteId),
+      'pushFlag': serializer.toJson<int>(pushFlag),
+      'createdDate': serializer.toJson<String?>(createdDate),
+      'createdBy': serializer.toJson<String?>(createdBy),
+    };
+  }
+
+  SchoolTableData copyWith({
+    String? schoolId,
+    String? schoolName,
+    String? instituteId,
+    int? pushFlag,
+    Value<String?> createdDate = const Value.absent(),
+    Value<String?> createdBy = const Value.absent(),
+  }) => SchoolTableData(
+    schoolId: schoolId ?? this.schoolId,
+    schoolName: schoolName ?? this.schoolName,
+    instituteId: instituteId ?? this.instituteId,
+    pushFlag: pushFlag ?? this.pushFlag,
+    createdDate: createdDate.present ? createdDate.value : this.createdDate,
+    createdBy: createdBy.present ? createdBy.value : this.createdBy,
+  );
+  SchoolTableData copyWithCompanion(SchoolTableCompanion data) {
+    return SchoolTableData(
+      schoolId: data.schoolId.present ? data.schoolId.value : this.schoolId,
+      schoolName: data.schoolName.present
+          ? data.schoolName.value
+          : this.schoolName,
+      instituteId: data.instituteId.present
+          ? data.instituteId.value
+          : this.instituteId,
+      pushFlag: data.pushFlag.present ? data.pushFlag.value : this.pushFlag,
+      createdDate: data.createdDate.present
+          ? data.createdDate.value
+          : this.createdDate,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SchoolTableData(')
+          ..write('schoolId: $schoolId, ')
+          ..write('schoolName: $schoolName, ')
+          ..write('instituteId: $instituteId, ')
+          ..write('pushFlag: $pushFlag, ')
+          ..write('createdDate: $createdDate, ')
+          ..write('createdBy: $createdBy')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    schoolId,
+    schoolName,
+    instituteId,
+    pushFlag,
+    createdDate,
+    createdBy,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SchoolTableData &&
+          other.schoolId == this.schoolId &&
+          other.schoolName == this.schoolName &&
+          other.instituteId == this.instituteId &&
+          other.pushFlag == this.pushFlag &&
+          other.createdDate == this.createdDate &&
+          other.createdBy == this.createdBy);
+}
+
+class SchoolTableCompanion extends UpdateCompanion<SchoolTableData> {
+  final Value<String> schoolId;
+  final Value<String> schoolName;
+  final Value<String> instituteId;
+  final Value<int> pushFlag;
+  final Value<String?> createdDate;
+  final Value<String?> createdBy;
+  final Value<int> rowid;
+  const SchoolTableCompanion({
+    this.schoolId = const Value.absent(),
+    this.schoolName = const Value.absent(),
+    this.instituteId = const Value.absent(),
+    this.pushFlag = const Value.absent(),
+    this.createdDate = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SchoolTableCompanion.insert({
+    required String schoolId,
+    required String schoolName,
+    required String instituteId,
+    this.pushFlag = const Value.absent(),
+    this.createdDate = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : schoolId = Value(schoolId),
+       schoolName = Value(schoolName),
+       instituteId = Value(instituteId);
+  static Insertable<SchoolTableData> custom({
+    Expression<String>? schoolId,
+    Expression<String>? schoolName,
+    Expression<String>? instituteId,
+    Expression<int>? pushFlag,
+    Expression<String>? createdDate,
+    Expression<String>? createdBy,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (schoolId != null) 'school_id': schoolId,
+      if (schoolName != null) 'school_name': schoolName,
+      if (instituteId != null) 'institute_id': instituteId,
+      if (pushFlag != null) 'push_flag': pushFlag,
+      if (createdDate != null) 'created_date': createdDate,
+      if (createdBy != null) 'created_by': createdBy,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SchoolTableCompanion copyWith({
+    Value<String>? schoolId,
+    Value<String>? schoolName,
+    Value<String>? instituteId,
+    Value<int>? pushFlag,
+    Value<String?>? createdDate,
+    Value<String?>? createdBy,
+    Value<int>? rowid,
+  }) {
+    return SchoolTableCompanion(
+      schoolId: schoolId ?? this.schoolId,
+      schoolName: schoolName ?? this.schoolName,
+      instituteId: instituteId ?? this.instituteId,
+      pushFlag: pushFlag ?? this.pushFlag,
+      createdDate: createdDate ?? this.createdDate,
+      createdBy: createdBy ?? this.createdBy,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (schoolId.present) {
+      map['school_id'] = Variable<String>(schoolId.value);
+    }
+    if (schoolName.present) {
+      map['school_name'] = Variable<String>(schoolName.value);
+    }
+    if (instituteId.present) {
+      map['institute_id'] = Variable<String>(instituteId.value);
+    }
+    if (pushFlag.present) {
+      map['push_flag'] = Variable<int>(pushFlag.value);
+    }
+    if (createdDate.present) {
+      map['created_date'] = Variable<String>(createdDate.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SchoolTableCompanion(')
+          ..write('schoolId: $schoolId, ')
+          ..write('schoolName: $schoolName, ')
+          ..write('instituteId: $instituteId, ')
+          ..write('pushFlag: $pushFlag, ')
+          ..write('createdDate: $createdDate, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1555,6 +1988,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $MunicipalityTableTable municipalityTable =
       $MunicipalityTableTable(this);
   late final $InstituteTableTable instituteTable = $InstituteTableTable(this);
+  late final $SchoolTableTable schoolTable = $SchoolTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1563,6 +1997,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     crlTable,
     municipalityTable,
     instituteTable,
+    schoolTable,
   ];
 }
 
@@ -2353,6 +2788,231 @@ typedef $$InstituteTableTableProcessedTableManager =
       InstituteTableData,
       PrefetchHooks Function()
     >;
+typedef $$SchoolTableTableCreateCompanionBuilder =
+    SchoolTableCompanion Function({
+      required String schoolId,
+      required String schoolName,
+      required String instituteId,
+      Value<int> pushFlag,
+      Value<String?> createdDate,
+      Value<String?> createdBy,
+      Value<int> rowid,
+    });
+typedef $$SchoolTableTableUpdateCompanionBuilder =
+    SchoolTableCompanion Function({
+      Value<String> schoolId,
+      Value<String> schoolName,
+      Value<String> instituteId,
+      Value<int> pushFlag,
+      Value<String?> createdDate,
+      Value<String?> createdBy,
+      Value<int> rowid,
+    });
+
+class $$SchoolTableTableFilterComposer
+    extends Composer<_$AppDatabase, $SchoolTableTable> {
+  $$SchoolTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get schoolId => $composableBuilder(
+    column: $table.schoolId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get schoolName => $composableBuilder(
+    column: $table.schoolName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get instituteId => $composableBuilder(
+    column: $table.instituteId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get pushFlag => $composableBuilder(
+    column: $table.pushFlag,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdDate => $composableBuilder(
+    column: $table.createdDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SchoolTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $SchoolTableTable> {
+  $$SchoolTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get schoolId => $composableBuilder(
+    column: $table.schoolId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get schoolName => $composableBuilder(
+    column: $table.schoolName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get instituteId => $composableBuilder(
+    column: $table.instituteId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get pushFlag => $composableBuilder(
+    column: $table.pushFlag,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdDate => $composableBuilder(
+    column: $table.createdDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SchoolTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SchoolTableTable> {
+  $$SchoolTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get schoolId =>
+      $composableBuilder(column: $table.schoolId, builder: (column) => column);
+
+  GeneratedColumn<String> get schoolName => $composableBuilder(
+    column: $table.schoolName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get instituteId => $composableBuilder(
+    column: $table.instituteId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get pushFlag =>
+      $composableBuilder(column: $table.pushFlag, builder: (column) => column);
+
+  GeneratedColumn<String> get createdDate => $composableBuilder(
+    column: $table.createdDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+}
+
+class $$SchoolTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SchoolTableTable,
+          SchoolTableData,
+          $$SchoolTableTableFilterComposer,
+          $$SchoolTableTableOrderingComposer,
+          $$SchoolTableTableAnnotationComposer,
+          $$SchoolTableTableCreateCompanionBuilder,
+          $$SchoolTableTableUpdateCompanionBuilder,
+          (
+            SchoolTableData,
+            BaseReferences<_$AppDatabase, $SchoolTableTable, SchoolTableData>,
+          ),
+          SchoolTableData,
+          PrefetchHooks Function()
+        > {
+  $$SchoolTableTableTableManager(_$AppDatabase db, $SchoolTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SchoolTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SchoolTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SchoolTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> schoolId = const Value.absent(),
+                Value<String> schoolName = const Value.absent(),
+                Value<String> instituteId = const Value.absent(),
+                Value<int> pushFlag = const Value.absent(),
+                Value<String?> createdDate = const Value.absent(),
+                Value<String?> createdBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SchoolTableCompanion(
+                schoolId: schoolId,
+                schoolName: schoolName,
+                instituteId: instituteId,
+                pushFlag: pushFlag,
+                createdDate: createdDate,
+                createdBy: createdBy,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String schoolId,
+                required String schoolName,
+                required String instituteId,
+                Value<int> pushFlag = const Value.absent(),
+                Value<String?> createdDate = const Value.absent(),
+                Value<String?> createdBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SchoolTableCompanion.insert(
+                schoolId: schoolId,
+                schoolName: schoolName,
+                instituteId: instituteId,
+                pushFlag: pushFlag,
+                createdDate: createdDate,
+                createdBy: createdBy,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SchoolTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SchoolTableTable,
+      SchoolTableData,
+      $$SchoolTableTableFilterComposer,
+      $$SchoolTableTableOrderingComposer,
+      $$SchoolTableTableAnnotationComposer,
+      $$SchoolTableTableCreateCompanionBuilder,
+      $$SchoolTableTableUpdateCompanionBuilder,
+      (
+        SchoolTableData,
+        BaseReferences<_$AppDatabase, $SchoolTableTable, SchoolTableData>,
+      ),
+      SchoolTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -2363,4 +3023,6 @@ class $AppDatabaseManager {
       $$MunicipalityTableTableTableManager(_db, _db.municipalityTable);
   $$InstituteTableTableTableManager get instituteTable =>
       $$InstituteTableTableTableManager(_db, _db.instituteTable);
+  $$SchoolTableTableTableManager get schoolTable =>
+      $$SchoolTableTableTableManager(_db, _db.schoolTable);
 }

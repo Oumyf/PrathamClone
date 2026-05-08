@@ -7,56 +7,53 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pratham_clone/core/theme.dart';
 import 'package:pratham_clone/data/database/app_database.dart';
 import 'package:pratham_clone/data/database/database_provider.dart';
-import 'package:pratham_clone/data/database/tables/institute_table.dart';
+import 'package:pratham_clone/data/database/tables/school_table.dart';
 import 'package:pratham_clone/shared/widgets/assessment_card.dart';
 import 'package:pratham_clone/shared/widgets/screen_header.dart';
 
-class SelectInstitutionScreen extends ConsumerStatefulWidget {
-  final String municipalityId;
+class SelectSchoolScreen extends ConsumerStatefulWidget {
+  final String instituteId;
 
-  const SelectInstitutionScreen({super.key, required this.municipalityId});
+  const SelectSchoolScreen({super.key, required this.instituteId});
 
   @override
-  ConsumerState<SelectInstitutionScreen> createState() =>
-      _SelectInstitutionScreenState();
+  ConsumerState<SelectSchoolScreen> createState() => _SelectSchoolScreenState();
 }
 
-class _SelectInstitutionScreenState
-    extends ConsumerState<SelectInstitutionScreen> {
-  List<InstituteTableData> _inspections = [];
+class _SelectSchoolScreenState extends ConsumerState<SelectSchoolScreen> {
+  List<SchoolTableData> _schools = [];
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadInspections();
+    _loadSchools();
   }
 
-  Future<void> _loadInspections() async {
+  Future<void> _loadSchools() async {
     try {
       final db = ref.read(databaseProvider);
-      final inspections =
-          await db.getInstitutesByMunicipality(widget.municipalityId);
+      final schools = await db.getSchoolsByInstitute(widget.instituteId);
       if (!mounted) return;
       setState(() {
-        _inspections = inspections;
+        _schools = schools;
         _isLoading = false;
       });
     } catch (e) {
       if (!mounted) return;
       setState(() => _isLoading = false);
-      debugPrint('Erreur chargement inspections: $e');
+      debugPrint('Erreur chargement écoles: $e');
     }
   }
 
-  Future<void> _addInspection(String name) async {
+  Future<void> _addSchool(String name) async {
     final db = ref.read(databaseProvider);
-    await db.insertInstitute(InstituteTableCompanion(
-      instituteId: Value(DateTime.now().millisecondsSinceEpoch.toString()),
-      instituteName: Value(name),
-      municipalityId: Value(widget.municipalityId),
+    await db.insertSchool(SchoolTableCompanion(
+      schoolId: Value(DateTime.now().millisecondsSinceEpoch.toString()),
+      schoolName: Value(name),
+      instituteId: Value(widget.instituteId),
     ));
-    _loadInspections();
+    _loadSchools();
   }
 
   void _showAddDialog() {
@@ -65,14 +62,14 @@ class _SelectInstitutionScreenState
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        title: Text('Ajouter une IEF',
+        title: Text('Ajouter une école',
             style: GoogleFonts.nunito(fontWeight: FontWeight.w700)),
         content: TextField(
           controller: controller,
           autofocus: true,
           decoration: const InputDecoration(
-            labelText: 'Nom de l\'IEF',
-            prefixIcon: Icon(Icons.account_balance_outlined),
+            labelText: 'Nom de l\'école',
+            prefixIcon: Icon(Icons.school_outlined),
           ),
         ),
         actions: [
@@ -85,7 +82,7 @@ class _SelectInstitutionScreenState
             style: ElevatedButton.styleFrom(minimumSize: const Size(80, 40)),
             onPressed: () {
               if (controller.text.trim().isNotEmpty) {
-                _addInspection(controller.text.trim());
+                _addSchool(controller.text.trim());
                 Navigator.pop(ctx);
               }
             },
@@ -107,25 +104,23 @@ class _SelectInstitutionScreenState
             : Column(
                 children: [
                   ScreenHeader(
-                    title: 'Inspections (IEF)',
-                    subtitle: 'Sélectionnez une inspection de l\'éducation',
-                    icon: Icons.account_balance_outlined,
-                    itemCount: _inspections.length,
-                    itemLabel: 'IEF',
+                    title: 'Écoles',
+                    subtitle: 'Sélectionnez l\'école à évaluer',
+                    icon: Icons.school_outlined,
+                    itemCount: _schools.length,
+                    itemLabel: 'écoles',
                   ),
                   Expanded(
-                    child: _inspections.isEmpty
-                        ? _buildEmpty()
-                        : _buildList(),
+                    child: _schools.isEmpty ? _buildEmpty() : _buildList(),
                   ),
                 ],
               ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _showAddDialog,
-        backgroundColor: AppColors.accent,
+        backgroundColor: AppColors.success,
         icon: const Icon(Icons.add, color: Colors.white),
-        label: Text('Ajouter IEF',
+        label: Text('Ajouter école',
             style: GoogleFonts.nunito(
                 color: Colors.white, fontWeight: FontWeight.w700)),
       ),
@@ -140,14 +135,14 @@ class _SelectInstitutionScreenState
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: AppColors.accent.withOpacity(0.1),
+              color: AppColors.success.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.account_balance_outlined,
-                size: 48, color: AppColors.accent.withOpacity(0.6)),
+            child: Icon(Icons.school_outlined,
+                size: 48, color: AppColors.success.withOpacity(0.6)),
           ),
           const Gap(20),
-          Text('Aucune IEF disponible',
+          Text('Aucune école disponible',
               style: GoogleFonts.nunito(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
@@ -164,20 +159,17 @@ class _SelectInstitutionScreenState
   Widget _buildList() {
     return ListView.separated(
       padding: const EdgeInsets.all(20),
-      itemCount: _inspections.length,
+      itemCount: _schools.length,
       separatorBuilder: (_, __) => const Gap(12),
       itemBuilder: (context, index) {
-        final inspection = _inspections[index];
+        final school = _schools[index];
         return AssessmentCard(
-          title: inspection.instituteName,
-          subtitle: 'Appuyez pour voir les écoles',
-          icon: Icons.account_balance_rounded,
-          iconColor: AppColors.accent,
-          iconBackground: const Color(0xFFFFF8E1),
-          onTap: () => context.push(
-            '/assessment/school',
-            extra: inspection.instituteId,
-          ),
+          title: school.schoolName,
+          subtitle: 'Appuyez pour sélectionner les élèves',
+          icon: Icons.school_rounded,
+          iconColor: AppColors.success,
+          iconBackground: const Color(0xFFE8F5E9),
+          onTap: () => context.push('/assessment/child', extra: school.schoolId),
         );
       },
     );
