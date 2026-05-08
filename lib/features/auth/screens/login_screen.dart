@@ -70,6 +70,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               _buildForm(),
               const Gap(24),
               _buildLoginButton(),
+              const Gap(12),
+              _buildRegisterButton(),
               const Gap(16),
               if (_errorMessage != null) _buildErrorMessage(),
               const Gap(48),
@@ -198,6 +200,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildRegisterButton() {
+    return TextButton(
+      onPressed: () => context.go('/pull-crl'),
+      child: Text(
+        "Première utilisation ? S'enregistrer",
+        style: GoogleFonts.nunito(
+          color: AppColors.primary,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

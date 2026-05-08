@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:pratham_clone/features/auth/screens/login_screen.dart';
 import 'package:pratham_clone/features/home/screens/home_screen.dart';
+import 'package:pratham_clone/features/pull_crl/screens/pull_crl_screen.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/login',
@@ -12,6 +13,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/home',
       builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/pull-crl',
+      builder: (context, state) => const PullCrlScreen(),
     ),
   ],
 );
