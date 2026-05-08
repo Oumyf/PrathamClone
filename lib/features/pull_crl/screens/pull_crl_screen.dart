@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pratham_clone/core/theme.dart';
 import 'package:pratham_clone/data/database/app_database.dart';
 import 'package:pratham_clone/data/database/database_provider.dart';
+import 'package:pratham_clone/data/database/tables/municipality_table.dart';
 import 'package:pratham_clone/data/models/department_model.dart';
 import 'package:pratham_clone/data/models/municipality_model.dart';
 import 'package:pratham_clone/data/services/pull_crl_service.dart';
@@ -115,8 +116,13 @@ class _PullCrlScreenState extends ConsumerState<PullCrlScreen> {
             ));
           }
         },
-        onFormsReady: (institutes, schools, children) {
-          // TODO: sauvegarder les formulaires en DB
+        onFormsReady: (institutes, schools, children) async {
+          for (final m in selectedMunicipalities) {
+            await db.insertMunicipality(MunicipalityTableCompanion(
+              municipalityId: Value(m.municipalityId),
+              municipalityName: Value(m.municipalityName),
+            ));
+          }
         },
       );
 

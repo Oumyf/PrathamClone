@@ -814,15 +814,756 @@ class CrlTableCompanion extends UpdateCompanion<CrlTableData> {
   }
 }
 
+class $MunicipalityTableTable extends MunicipalityTable
+    with TableInfo<$MunicipalityTableTable, MunicipalityTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MunicipalityTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _municipalityIdMeta = const VerificationMeta(
+    'municipalityId',
+  );
+  @override
+  late final GeneratedColumn<String> municipalityId = GeneratedColumn<String>(
+    'municipality_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _municipalityNameMeta = const VerificationMeta(
+    'municipalityName',
+  );
+  @override
+  late final GeneratedColumn<String> municipalityName = GeneratedColumn<String>(
+    'municipality_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _departmentIdMeta = const VerificationMeta(
+    'departmentId',
+  );
+  @override
+  late final GeneratedColumn<String> departmentId = GeneratedColumn<String>(
+    'department_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    municipalityId,
+    municipalityName,
+    departmentId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'municipality_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MunicipalityTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('municipality_id')) {
+      context.handle(
+        _municipalityIdMeta,
+        municipalityId.isAcceptableOrUnknown(
+          data['municipality_id']!,
+          _municipalityIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_municipalityIdMeta);
+    }
+    if (data.containsKey('municipality_name')) {
+      context.handle(
+        _municipalityNameMeta,
+        municipalityName.isAcceptableOrUnknown(
+          data['municipality_name']!,
+          _municipalityNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_municipalityNameMeta);
+    }
+    if (data.containsKey('department_id')) {
+      context.handle(
+        _departmentIdMeta,
+        departmentId.isAcceptableOrUnknown(
+          data['department_id']!,
+          _departmentIdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {municipalityId};
+  @override
+  MunicipalityTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MunicipalityTableData(
+      municipalityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}municipality_id'],
+      )!,
+      municipalityName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}municipality_name'],
+      )!,
+      departmentId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}department_id'],
+      ),
+    );
+  }
+
+  @override
+  $MunicipalityTableTable createAlias(String alias) {
+    return $MunicipalityTableTable(attachedDatabase, alias);
+  }
+}
+
+class MunicipalityTableData extends DataClass
+    implements Insertable<MunicipalityTableData> {
+  final String municipalityId;
+  final String municipalityName;
+  final String? departmentId;
+  const MunicipalityTableData({
+    required this.municipalityId,
+    required this.municipalityName,
+    this.departmentId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['municipality_id'] = Variable<String>(municipalityId);
+    map['municipality_name'] = Variable<String>(municipalityName);
+    if (!nullToAbsent || departmentId != null) {
+      map['department_id'] = Variable<String>(departmentId);
+    }
+    return map;
+  }
+
+  MunicipalityTableCompanion toCompanion(bool nullToAbsent) {
+    return MunicipalityTableCompanion(
+      municipalityId: Value(municipalityId),
+      municipalityName: Value(municipalityName),
+      departmentId: departmentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(departmentId),
+    );
+  }
+
+  factory MunicipalityTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MunicipalityTableData(
+      municipalityId: serializer.fromJson<String>(json['municipalityId']),
+      municipalityName: serializer.fromJson<String>(json['municipalityName']),
+      departmentId: serializer.fromJson<String?>(json['departmentId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'municipalityId': serializer.toJson<String>(municipalityId),
+      'municipalityName': serializer.toJson<String>(municipalityName),
+      'departmentId': serializer.toJson<String?>(departmentId),
+    };
+  }
+
+  MunicipalityTableData copyWith({
+    String? municipalityId,
+    String? municipalityName,
+    Value<String?> departmentId = const Value.absent(),
+  }) => MunicipalityTableData(
+    municipalityId: municipalityId ?? this.municipalityId,
+    municipalityName: municipalityName ?? this.municipalityName,
+    departmentId: departmentId.present ? departmentId.value : this.departmentId,
+  );
+  MunicipalityTableData copyWithCompanion(MunicipalityTableCompanion data) {
+    return MunicipalityTableData(
+      municipalityId: data.municipalityId.present
+          ? data.municipalityId.value
+          : this.municipalityId,
+      municipalityName: data.municipalityName.present
+          ? data.municipalityName.value
+          : this.municipalityName,
+      departmentId: data.departmentId.present
+          ? data.departmentId.value
+          : this.departmentId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MunicipalityTableData(')
+          ..write('municipalityId: $municipalityId, ')
+          ..write('municipalityName: $municipalityName, ')
+          ..write('departmentId: $departmentId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(municipalityId, municipalityName, departmentId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MunicipalityTableData &&
+          other.municipalityId == this.municipalityId &&
+          other.municipalityName == this.municipalityName &&
+          other.departmentId == this.departmentId);
+}
+
+class MunicipalityTableCompanion
+    extends UpdateCompanion<MunicipalityTableData> {
+  final Value<String> municipalityId;
+  final Value<String> municipalityName;
+  final Value<String?> departmentId;
+  final Value<int> rowid;
+  const MunicipalityTableCompanion({
+    this.municipalityId = const Value.absent(),
+    this.municipalityName = const Value.absent(),
+    this.departmentId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MunicipalityTableCompanion.insert({
+    required String municipalityId,
+    required String municipalityName,
+    this.departmentId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : municipalityId = Value(municipalityId),
+       municipalityName = Value(municipalityName);
+  static Insertable<MunicipalityTableData> custom({
+    Expression<String>? municipalityId,
+    Expression<String>? municipalityName,
+    Expression<String>? departmentId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (municipalityId != null) 'municipality_id': municipalityId,
+      if (municipalityName != null) 'municipality_name': municipalityName,
+      if (departmentId != null) 'department_id': departmentId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MunicipalityTableCompanion copyWith({
+    Value<String>? municipalityId,
+    Value<String>? municipalityName,
+    Value<String?>? departmentId,
+    Value<int>? rowid,
+  }) {
+    return MunicipalityTableCompanion(
+      municipalityId: municipalityId ?? this.municipalityId,
+      municipalityName: municipalityName ?? this.municipalityName,
+      departmentId: departmentId ?? this.departmentId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (municipalityId.present) {
+      map['municipality_id'] = Variable<String>(municipalityId.value);
+    }
+    if (municipalityName.present) {
+      map['municipality_name'] = Variable<String>(municipalityName.value);
+    }
+    if (departmentId.present) {
+      map['department_id'] = Variable<String>(departmentId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MunicipalityTableCompanion(')
+          ..write('municipalityId: $municipalityId, ')
+          ..write('municipalityName: $municipalityName, ')
+          ..write('departmentId: $departmentId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $InstituteTableTable extends InstituteTable
+    with TableInfo<$InstituteTableTable, InstituteTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $InstituteTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _instituteIdMeta = const VerificationMeta(
+    'instituteId',
+  );
+  @override
+  late final GeneratedColumn<String> instituteId = GeneratedColumn<String>(
+    'institute_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _instituteNameMeta = const VerificationMeta(
+    'instituteName',
+  );
+  @override
+  late final GeneratedColumn<String> instituteName = GeneratedColumn<String>(
+    'institute_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _municipalityIdMeta = const VerificationMeta(
+    'municipalityId',
+  );
+  @override
+  late final GeneratedColumn<String> municipalityId = GeneratedColumn<String>(
+    'municipality_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _pushFlagMeta = const VerificationMeta(
+    'pushFlag',
+  );
+  @override
+  late final GeneratedColumn<int> pushFlag = GeneratedColumn<int>(
+    'push_flag',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(1),
+  );
+  static const VerificationMeta _createdDateMeta = const VerificationMeta(
+    'createdDate',
+  );
+  @override
+  late final GeneratedColumn<String> createdDate = GeneratedColumn<String>(
+    'created_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdByMeta = const VerificationMeta(
+    'createdBy',
+  );
+  @override
+  late final GeneratedColumn<String> createdBy = GeneratedColumn<String>(
+    'created_by',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    instituteId,
+    instituteName,
+    municipalityId,
+    pushFlag,
+    createdDate,
+    createdBy,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'institute_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<InstituteTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('institute_id')) {
+      context.handle(
+        _instituteIdMeta,
+        instituteId.isAcceptableOrUnknown(
+          data['institute_id']!,
+          _instituteIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_instituteIdMeta);
+    }
+    if (data.containsKey('institute_name')) {
+      context.handle(
+        _instituteNameMeta,
+        instituteName.isAcceptableOrUnknown(
+          data['institute_name']!,
+          _instituteNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_instituteNameMeta);
+    }
+    if (data.containsKey('municipality_id')) {
+      context.handle(
+        _municipalityIdMeta,
+        municipalityId.isAcceptableOrUnknown(
+          data['municipality_id']!,
+          _municipalityIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_municipalityIdMeta);
+    }
+    if (data.containsKey('push_flag')) {
+      context.handle(
+        _pushFlagMeta,
+        pushFlag.isAcceptableOrUnknown(data['push_flag']!, _pushFlagMeta),
+      );
+    }
+    if (data.containsKey('created_date')) {
+      context.handle(
+        _createdDateMeta,
+        createdDate.isAcceptableOrUnknown(
+          data['created_date']!,
+          _createdDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_by')) {
+      context.handle(
+        _createdByMeta,
+        createdBy.isAcceptableOrUnknown(data['created_by']!, _createdByMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {instituteId};
+  @override
+  InstituteTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return InstituteTableData(
+      instituteId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}institute_id'],
+      )!,
+      instituteName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}institute_name'],
+      )!,
+      municipalityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}municipality_id'],
+      )!,
+      pushFlag: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}push_flag'],
+      )!,
+      createdDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_date'],
+      ),
+      createdBy: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by'],
+      ),
+    );
+  }
+
+  @override
+  $InstituteTableTable createAlias(String alias) {
+    return $InstituteTableTable(attachedDatabase, alias);
+  }
+}
+
+class InstituteTableData extends DataClass
+    implements Insertable<InstituteTableData> {
+  final String instituteId;
+  final String instituteName;
+  final String municipalityId;
+  final int pushFlag;
+  final String? createdDate;
+  final String? createdBy;
+  const InstituteTableData({
+    required this.instituteId,
+    required this.instituteName,
+    required this.municipalityId,
+    required this.pushFlag,
+    this.createdDate,
+    this.createdBy,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['institute_id'] = Variable<String>(instituteId);
+    map['institute_name'] = Variable<String>(instituteName);
+    map['municipality_id'] = Variable<String>(municipalityId);
+    map['push_flag'] = Variable<int>(pushFlag);
+    if (!nullToAbsent || createdDate != null) {
+      map['created_date'] = Variable<String>(createdDate);
+    }
+    if (!nullToAbsent || createdBy != null) {
+      map['created_by'] = Variable<String>(createdBy);
+    }
+    return map;
+  }
+
+  InstituteTableCompanion toCompanion(bool nullToAbsent) {
+    return InstituteTableCompanion(
+      instituteId: Value(instituteId),
+      instituteName: Value(instituteName),
+      municipalityId: Value(municipalityId),
+      pushFlag: Value(pushFlag),
+      createdDate: createdDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdDate),
+      createdBy: createdBy == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdBy),
+    );
+  }
+
+  factory InstituteTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return InstituteTableData(
+      instituteId: serializer.fromJson<String>(json['instituteId']),
+      instituteName: serializer.fromJson<String>(json['instituteName']),
+      municipalityId: serializer.fromJson<String>(json['municipalityId']),
+      pushFlag: serializer.fromJson<int>(json['pushFlag']),
+      createdDate: serializer.fromJson<String?>(json['createdDate']),
+      createdBy: serializer.fromJson<String?>(json['createdBy']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'instituteId': serializer.toJson<String>(instituteId),
+      'instituteName': serializer.toJson<String>(instituteName),
+      'municipalityId': serializer.toJson<String>(municipalityId),
+      'pushFlag': serializer.toJson<int>(pushFlag),
+      'createdDate': serializer.toJson<String?>(createdDate),
+      'createdBy': serializer.toJson<String?>(createdBy),
+    };
+  }
+
+  InstituteTableData copyWith({
+    String? instituteId,
+    String? instituteName,
+    String? municipalityId,
+    int? pushFlag,
+    Value<String?> createdDate = const Value.absent(),
+    Value<String?> createdBy = const Value.absent(),
+  }) => InstituteTableData(
+    instituteId: instituteId ?? this.instituteId,
+    instituteName: instituteName ?? this.instituteName,
+    municipalityId: municipalityId ?? this.municipalityId,
+    pushFlag: pushFlag ?? this.pushFlag,
+    createdDate: createdDate.present ? createdDate.value : this.createdDate,
+    createdBy: createdBy.present ? createdBy.value : this.createdBy,
+  );
+  InstituteTableData copyWithCompanion(InstituteTableCompanion data) {
+    return InstituteTableData(
+      instituteId: data.instituteId.present
+          ? data.instituteId.value
+          : this.instituteId,
+      instituteName: data.instituteName.present
+          ? data.instituteName.value
+          : this.instituteName,
+      municipalityId: data.municipalityId.present
+          ? data.municipalityId.value
+          : this.municipalityId,
+      pushFlag: data.pushFlag.present ? data.pushFlag.value : this.pushFlag,
+      createdDate: data.createdDate.present
+          ? data.createdDate.value
+          : this.createdDate,
+      createdBy: data.createdBy.present ? data.createdBy.value : this.createdBy,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('InstituteTableData(')
+          ..write('instituteId: $instituteId, ')
+          ..write('instituteName: $instituteName, ')
+          ..write('municipalityId: $municipalityId, ')
+          ..write('pushFlag: $pushFlag, ')
+          ..write('createdDate: $createdDate, ')
+          ..write('createdBy: $createdBy')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    instituteId,
+    instituteName,
+    municipalityId,
+    pushFlag,
+    createdDate,
+    createdBy,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is InstituteTableData &&
+          other.instituteId == this.instituteId &&
+          other.instituteName == this.instituteName &&
+          other.municipalityId == this.municipalityId &&
+          other.pushFlag == this.pushFlag &&
+          other.createdDate == this.createdDate &&
+          other.createdBy == this.createdBy);
+}
+
+class InstituteTableCompanion extends UpdateCompanion<InstituteTableData> {
+  final Value<String> instituteId;
+  final Value<String> instituteName;
+  final Value<String> municipalityId;
+  final Value<int> pushFlag;
+  final Value<String?> createdDate;
+  final Value<String?> createdBy;
+  final Value<int> rowid;
+  const InstituteTableCompanion({
+    this.instituteId = const Value.absent(),
+    this.instituteName = const Value.absent(),
+    this.municipalityId = const Value.absent(),
+    this.pushFlag = const Value.absent(),
+    this.createdDate = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  InstituteTableCompanion.insert({
+    required String instituteId,
+    required String instituteName,
+    required String municipalityId,
+    this.pushFlag = const Value.absent(),
+    this.createdDate = const Value.absent(),
+    this.createdBy = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : instituteId = Value(instituteId),
+       instituteName = Value(instituteName),
+       municipalityId = Value(municipalityId);
+  static Insertable<InstituteTableData> custom({
+    Expression<String>? instituteId,
+    Expression<String>? instituteName,
+    Expression<String>? municipalityId,
+    Expression<int>? pushFlag,
+    Expression<String>? createdDate,
+    Expression<String>? createdBy,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (instituteId != null) 'institute_id': instituteId,
+      if (instituteName != null) 'institute_name': instituteName,
+      if (municipalityId != null) 'municipality_id': municipalityId,
+      if (pushFlag != null) 'push_flag': pushFlag,
+      if (createdDate != null) 'created_date': createdDate,
+      if (createdBy != null) 'created_by': createdBy,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  InstituteTableCompanion copyWith({
+    Value<String>? instituteId,
+    Value<String>? instituteName,
+    Value<String>? municipalityId,
+    Value<int>? pushFlag,
+    Value<String?>? createdDate,
+    Value<String?>? createdBy,
+    Value<int>? rowid,
+  }) {
+    return InstituteTableCompanion(
+      instituteId: instituteId ?? this.instituteId,
+      instituteName: instituteName ?? this.instituteName,
+      municipalityId: municipalityId ?? this.municipalityId,
+      pushFlag: pushFlag ?? this.pushFlag,
+      createdDate: createdDate ?? this.createdDate,
+      createdBy: createdBy ?? this.createdBy,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (instituteId.present) {
+      map['institute_id'] = Variable<String>(instituteId.value);
+    }
+    if (instituteName.present) {
+      map['institute_name'] = Variable<String>(instituteName.value);
+    }
+    if (municipalityId.present) {
+      map['municipality_id'] = Variable<String>(municipalityId.value);
+    }
+    if (pushFlag.present) {
+      map['push_flag'] = Variable<int>(pushFlag.value);
+    }
+    if (createdDate.present) {
+      map['created_date'] = Variable<String>(createdDate.value);
+    }
+    if (createdBy.present) {
+      map['created_by'] = Variable<String>(createdBy.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('InstituteTableCompanion(')
+          ..write('instituteId: $instituteId, ')
+          ..write('instituteName: $instituteName, ')
+          ..write('municipalityId: $municipalityId, ')
+          ..write('pushFlag: $pushFlag, ')
+          ..write('createdDate: $createdDate, ')
+          ..write('createdBy: $createdBy, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $CrlTableTable crlTable = $CrlTableTable(this);
+  late final $MunicipalityTableTable municipalityTable =
+      $MunicipalityTableTable(this);
+  late final $InstituteTableTable instituteTable = $InstituteTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [crlTable];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    crlTable,
+    municipalityTable,
+    instituteTable,
+  ];
 }
 
 typedef $$CrlTableTableCreateCompanionBuilder =
@@ -1198,10 +1939,428 @@ typedef $$CrlTableTableProcessedTableManager =
       CrlTableData,
       PrefetchHooks Function()
     >;
+typedef $$MunicipalityTableTableCreateCompanionBuilder =
+    MunicipalityTableCompanion Function({
+      required String municipalityId,
+      required String municipalityName,
+      Value<String?> departmentId,
+      Value<int> rowid,
+    });
+typedef $$MunicipalityTableTableUpdateCompanionBuilder =
+    MunicipalityTableCompanion Function({
+      Value<String> municipalityId,
+      Value<String> municipalityName,
+      Value<String?> departmentId,
+      Value<int> rowid,
+    });
+
+class $$MunicipalityTableTableFilterComposer
+    extends Composer<_$AppDatabase, $MunicipalityTableTable> {
+  $$MunicipalityTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get municipalityId => $composableBuilder(
+    column: $table.municipalityId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get municipalityName => $composableBuilder(
+    column: $table.municipalityName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get departmentId => $composableBuilder(
+    column: $table.departmentId,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MunicipalityTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $MunicipalityTableTable> {
+  $$MunicipalityTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get municipalityId => $composableBuilder(
+    column: $table.municipalityId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get municipalityName => $composableBuilder(
+    column: $table.municipalityName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get departmentId => $composableBuilder(
+    column: $table.departmentId,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MunicipalityTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MunicipalityTableTable> {
+  $$MunicipalityTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get municipalityId => $composableBuilder(
+    column: $table.municipalityId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get municipalityName => $composableBuilder(
+    column: $table.municipalityName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get departmentId => $composableBuilder(
+    column: $table.departmentId,
+    builder: (column) => column,
+  );
+}
+
+class $$MunicipalityTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MunicipalityTableTable,
+          MunicipalityTableData,
+          $$MunicipalityTableTableFilterComposer,
+          $$MunicipalityTableTableOrderingComposer,
+          $$MunicipalityTableTableAnnotationComposer,
+          $$MunicipalityTableTableCreateCompanionBuilder,
+          $$MunicipalityTableTableUpdateCompanionBuilder,
+          (
+            MunicipalityTableData,
+            BaseReferences<
+              _$AppDatabase,
+              $MunicipalityTableTable,
+              MunicipalityTableData
+            >,
+          ),
+          MunicipalityTableData,
+          PrefetchHooks Function()
+        > {
+  $$MunicipalityTableTableTableManager(
+    _$AppDatabase db,
+    $MunicipalityTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MunicipalityTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MunicipalityTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MunicipalityTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> municipalityId = const Value.absent(),
+                Value<String> municipalityName = const Value.absent(),
+                Value<String?> departmentId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MunicipalityTableCompanion(
+                municipalityId: municipalityId,
+                municipalityName: municipalityName,
+                departmentId: departmentId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String municipalityId,
+                required String municipalityName,
+                Value<String?> departmentId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MunicipalityTableCompanion.insert(
+                municipalityId: municipalityId,
+                municipalityName: municipalityName,
+                departmentId: departmentId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MunicipalityTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MunicipalityTableTable,
+      MunicipalityTableData,
+      $$MunicipalityTableTableFilterComposer,
+      $$MunicipalityTableTableOrderingComposer,
+      $$MunicipalityTableTableAnnotationComposer,
+      $$MunicipalityTableTableCreateCompanionBuilder,
+      $$MunicipalityTableTableUpdateCompanionBuilder,
+      (
+        MunicipalityTableData,
+        BaseReferences<
+          _$AppDatabase,
+          $MunicipalityTableTable,
+          MunicipalityTableData
+        >,
+      ),
+      MunicipalityTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$InstituteTableTableCreateCompanionBuilder =
+    InstituteTableCompanion Function({
+      required String instituteId,
+      required String instituteName,
+      required String municipalityId,
+      Value<int> pushFlag,
+      Value<String?> createdDate,
+      Value<String?> createdBy,
+      Value<int> rowid,
+    });
+typedef $$InstituteTableTableUpdateCompanionBuilder =
+    InstituteTableCompanion Function({
+      Value<String> instituteId,
+      Value<String> instituteName,
+      Value<String> municipalityId,
+      Value<int> pushFlag,
+      Value<String?> createdDate,
+      Value<String?> createdBy,
+      Value<int> rowid,
+    });
+
+class $$InstituteTableTableFilterComposer
+    extends Composer<_$AppDatabase, $InstituteTableTable> {
+  $$InstituteTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get instituteId => $composableBuilder(
+    column: $table.instituteId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get instituteName => $composableBuilder(
+    column: $table.instituteName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get municipalityId => $composableBuilder(
+    column: $table.municipalityId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get pushFlag => $composableBuilder(
+    column: $table.pushFlag,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdDate => $composableBuilder(
+    column: $table.createdDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$InstituteTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $InstituteTableTable> {
+  $$InstituteTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get instituteId => $composableBuilder(
+    column: $table.instituteId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get instituteName => $composableBuilder(
+    column: $table.instituteName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get municipalityId => $composableBuilder(
+    column: $table.municipalityId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get pushFlag => $composableBuilder(
+    column: $table.pushFlag,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdDate => $composableBuilder(
+    column: $table.createdDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdBy => $composableBuilder(
+    column: $table.createdBy,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$InstituteTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $InstituteTableTable> {
+  $$InstituteTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get instituteId => $composableBuilder(
+    column: $table.instituteId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get instituteName => $composableBuilder(
+    column: $table.instituteName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get municipalityId => $composableBuilder(
+    column: $table.municipalityId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get pushFlag =>
+      $composableBuilder(column: $table.pushFlag, builder: (column) => column);
+
+  GeneratedColumn<String> get createdDate => $composableBuilder(
+    column: $table.createdDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get createdBy =>
+      $composableBuilder(column: $table.createdBy, builder: (column) => column);
+}
+
+class $$InstituteTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $InstituteTableTable,
+          InstituteTableData,
+          $$InstituteTableTableFilterComposer,
+          $$InstituteTableTableOrderingComposer,
+          $$InstituteTableTableAnnotationComposer,
+          $$InstituteTableTableCreateCompanionBuilder,
+          $$InstituteTableTableUpdateCompanionBuilder,
+          (
+            InstituteTableData,
+            BaseReferences<
+              _$AppDatabase,
+              $InstituteTableTable,
+              InstituteTableData
+            >,
+          ),
+          InstituteTableData,
+          PrefetchHooks Function()
+        > {
+  $$InstituteTableTableTableManager(
+    _$AppDatabase db,
+    $InstituteTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$InstituteTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$InstituteTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$InstituteTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> instituteId = const Value.absent(),
+                Value<String> instituteName = const Value.absent(),
+                Value<String> municipalityId = const Value.absent(),
+                Value<int> pushFlag = const Value.absent(),
+                Value<String?> createdDate = const Value.absent(),
+                Value<String?> createdBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => InstituteTableCompanion(
+                instituteId: instituteId,
+                instituteName: instituteName,
+                municipalityId: municipalityId,
+                pushFlag: pushFlag,
+                createdDate: createdDate,
+                createdBy: createdBy,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String instituteId,
+                required String instituteName,
+                required String municipalityId,
+                Value<int> pushFlag = const Value.absent(),
+                Value<String?> createdDate = const Value.absent(),
+                Value<String?> createdBy = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => InstituteTableCompanion.insert(
+                instituteId: instituteId,
+                instituteName: instituteName,
+                municipalityId: municipalityId,
+                pushFlag: pushFlag,
+                createdDate: createdDate,
+                createdBy: createdBy,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$InstituteTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $InstituteTableTable,
+      InstituteTableData,
+      $$InstituteTableTableFilterComposer,
+      $$InstituteTableTableOrderingComposer,
+      $$InstituteTableTableAnnotationComposer,
+      $$InstituteTableTableCreateCompanionBuilder,
+      $$InstituteTableTableUpdateCompanionBuilder,
+      (
+        InstituteTableData,
+        BaseReferences<_$AppDatabase, $InstituteTableTable, InstituteTableData>,
+      ),
+      InstituteTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
   $$CrlTableTableTableManager get crlTable =>
       $$CrlTableTableTableManager(_db, _db.crlTable);
+  $$MunicipalityTableTableTableManager get municipalityTable =>
+      $$MunicipalityTableTableTableManager(_db, _db.municipalityTable);
+  $$InstituteTableTableTableManager get instituteTable =>
+      $$InstituteTableTableTableManager(_db, _db.instituteTable);
 }

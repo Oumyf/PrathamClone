@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pratham_clone/core/theme.dart';
 
@@ -89,9 +90,7 @@ class _AssessmentTab extends StatelessWidget {
   Widget _buildStartCard(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: () {
-          // TODO: naviguer vers SelectMunicipality
-        },
+        onTap: () => context.push('/assessment/municipality'),
         borderRadius: BorderRadius.circular(20),
         child: Padding(
           padding: const EdgeInsets.all(24),

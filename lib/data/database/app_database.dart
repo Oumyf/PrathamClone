@@ -4,15 +4,26 @@ import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:pratham_clone/data/database/tables/crl_table.dart';
+import 'package:pratham_clone/data/database/tables/institute_table.dart';
+import 'package:pratham_clone/data/database/tables/municipality_table.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [CrlTable])
+@DriftDatabase(tables: [CrlTable, MunicipalityTable, InstituteTable])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 3;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (m) => m.createAll(),
+        onUpgrade: (m, from, to) async {
+          if (from < 2) await m.createTable(municipalityTable);
+          if (from < 3) await m.createTable(instituteTable);
+        },
+      );
 
   Future<CrlTableData?> checkCredentials(String userName, String password) {
     return (select(crlTable)
@@ -23,6 +34,27 @@ class AppDatabase extends _$AppDatabase {
 
   Future<void> insertCrl(CrlTableCompanion crl) {
     return into(crlTable).insertOnConflictUpdate(crl);
+  }
+
+  Future<List<MunicipalityTableData>> getAllMunicipalities() {
+    return (select(municipalityTable)
+          ..orderBy([(m) => OrderingTerm.asc(m.municipalityName)]))
+        .get();
+  }
+
+  Future<void> insertMunicipality(MunicipalityTableCompanion municipality) {
+    return into(municipalityTable).insertOnConflictUpdate(municipality);
+  }
+
+  Future<List<InstituteTableData>> getInstitutesByMunicipality(String municipalityId) {
+    return (select(instituteTable)
+          ..where((i) => i.municipalityId.equals(municipalityId))
+          ..orderBy([(i) => OrderingTerm.asc(i.instituteName)]))
+        .get();
+  }
+
+  Future<void> insertInstitute(InstituteTableCompanion institute) {
+    return into(instituteTable).insertOnConflictUpdate(institute);
   }
 
   Future<void> seedTestUser() {
