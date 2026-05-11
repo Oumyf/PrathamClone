@@ -29,6 +29,12 @@ dependencies:
   # Stockage clé-valeur
   shared_preferences: ^2.2.3
 
+  # Audio
+  record: ^4.4.4
+
+  # ZIP
+  archive: ^3.6.1
+
   # UI
   google_fonts: ^6.2.1
   flutter_svg: ^2.0.10+1

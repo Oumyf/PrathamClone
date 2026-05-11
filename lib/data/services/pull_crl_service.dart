@@ -21,15 +21,22 @@ class PullCrlService {
     return data.map((e) => MunicipalityModel.fromJson(e)).toList();
   }
 
+  Future<List<Map<String, dynamic>>> getAserSamples() async {
+    final response = await _dio.get(ApiConstants.getAserSamples);
+    final List data = response.data['data'];
+    return data.cast<Map<String, dynamic>>();
+  }
+
   Future<void> pullAllData({
     required List<MunicipalityModel> municipalities,
     required Function(String) onProgress,
     required Function(List) onCrlsReady,
+    required Function(List<Map<String, dynamic>>) onAserSamplesReady,
     required Function(List, List, List) onFormsReady,
   }) async {
     onProgress('Téléchargement des outils ASER...');
-    // final aserResponse = await _dio.get(ApiConstants.getAserSamples);
-    // final List aserData = aserResponse.data['data'];
+    final aserSamples = await getAserSamples();
+    onAserSamplesReady(aserSamples);
 
     onProgress('Téléchargement des comptes utilisateurs...');
     final crlResponse = await _dio.get(ApiConstants.getCrls);

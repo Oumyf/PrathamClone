@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JOURNAL_READNET.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> or <div class="page"></div> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="journal-de-bord--readnet-flutter">Journal de bord — ReadNet Flutter</h1>
+<p><em>Ce que j'ai construit, comment ça fonctionne, et ce que j'ai appris en le faisant.</em></p>
+<hr>
+<h2 id="le-contexte">Le contexte</h2>
+<p>ReadNet est une application mobile utilisée au Sénégal pour évaluer les compétences en lecture des enfants, selon la méthode ASER (Annual Status of Education Report). Il existait déjà une version Android en Java. Mon travail : la reconstruire en Flutter en apprenant au fur et à mesure.</p>
+<p>Je n'avais pas une connaissance avancée de Flutter au départ. Ce document retrace ce que j'ai construit, les choix techniques que j'ai faits, et surtout les erreurs qui m'ont appris des choses.</p>
+<hr>
+<h2 id="ce-quon-a-installé-et-pourquoi">Ce qu'on a installé et pourquoi</h2>
+<p><strong>Flutter + Dart.</strong> Le choix de base. Une seule codebase pour Android (et iOS si besoin plus tard). Dart est un langage typé, proche de Java ou TypeScript, donc pas trop dépaysant.</p>
+<p><strong>Riverpod</strong> pour la gestion d'état. Il y a aussi Provider, Bloc, GetX... J'ai choisi Riverpod parce qu'il force à être explicite sur ce qui est partagé dans l'app. Un <code>Provider</code> Riverpod c'est un objet global accessible depuis n'importe quel widget sans passer par le constructeur à chaque fois.</p>
+<p><strong>Drift</strong> pour la base de données locale. Drift est un ORM au-dessus de SQLite. L'idée : tu décris tes tables en Dart, tu lances une commande, et il génère tout le code de requête automatiquement. C'est beaucoup plus propre qu'écrire des chaînes SQL à la main.</p>
+<p><strong>go_router</strong> pour la navigation. Flutter a une navigation native mais elle devient vite compliquée dès qu'on veut des routes nommées ou passer des données entre écrans. go_router ressemble à ce qu'on ferait avec React Router.</p>
+<p><strong>Dio</strong> pour les appels HTTP. L'équivalent de Retrofit en Java ou Axios en JavaScript. Gère les timeouts, les headers, l'upload multipart.</p>
+<p><strong>record</strong> pour enregistrer l'audio. L'enfant lit à voix haute, l'évaluateur enregistre. Simple.</p>
+<p><strong>archive</strong> pour créer des fichiers ZIP. On emballe les enregistrements audio + un fichier JSON dans un ZIP avant d'envoyer au serveur.</p>
+<hr>
+<h2 id="la-structure-du-projet">La structure du projet</h2>
+<p>J'ai organisé le projet par fonctionnalité (features), pas par type de fichier. C'est ce qu'on appelle &quot;feature-first&quot; :</p>
+<pre class="hljs"><code><div>lib/
+├── core/           → thème, routes, constantes API
+├── data/
+│   ├── database/   → tables Drift + AppDatabase + provider
+│   ├── models/     → modèles pour les réponses API
+│   └── services/   → logique réseau (pull données, sync upload)
+├── features/
+│   ├── auth/       → écran de connexion
+│   ├── home/       → écran principal (3 onglets)
+│   ├── assessment/ → flux d'évaluation
+│   └── pull_crl/   → premier lancement, téléchargement des données
+└── shared/
+    └── widgets/    → composants réutilisables
+</div></code></pre>
+<p>Pourquoi cette structure ? Parce que quand je cherche &quot;tout ce qui touche à l'évaluation&quot;, je vais dans <code>features/assessment/</code>. Je n'ai pas à passer entre <code>screens/</code>, <code>controllers/</code>, <code>models/</code> dans des dossiers séparés.</p>
+<hr>
+<h2 id="la-base-de-données-avec-drift">La base de données avec Drift</h2>
+<h3 id="comment-drift-fonctionne">Comment Drift fonctionne</h3>
+<p>Tu crées une classe par table qui étend <code>Table</code> :</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AserToolTable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Table</span> </span>{
+  TextColumn <span class="hljs-keyword">get</span> id =&gt; text()();
+  TextColumn <span class="hljs-keyword">get</span> data =&gt; text()();
+  TextColumn <span class="hljs-keyword">get</span> type =&gt; text()();
+  TextColumn <span class="hljs-keyword">get</span> language =&gt; text()();
+  IntColumn <span class="hljs-keyword">get</span> sampleNumber =&gt; integer().withDefault(<span class="hljs-keyword">const</span> Constant(<span class="hljs-number">1</span>))();
+  BoolColumn <span class="hljs-keyword">get</span> isAttempted =&gt; boolean().withDefault(<span class="hljs-keyword">const</span> Constant(<span class="hljs-keyword">false</span>))();
+
+  <span class="hljs-meta">@override</span>
+  <span class="hljs-built_in">Set</span>&lt;Column&gt; <span class="hljs-keyword">get</span> primaryKey =&gt; {id};
+}
+</div></code></pre>
+<p>Ensuite tu lances <code>flutter pub run build_runner build</code> et Drift génère un fichier <code>.g.dart</code> avec toute la logique de requête. Tu n'écris jamais de SQL.</p>
+<p>Pour interroger la base :</p>
+<pre class="hljs"><code><div>Future&lt;<span class="hljs-built_in">List</span>&lt;AserToolTableData&gt;&gt; getAserToolItems(
+    <span class="hljs-built_in">String</span> type, <span class="hljs-built_in">String</span> language, <span class="hljs-built_in">int</span> limit) {
+  <span class="hljs-keyword">return</span> (select(aserToolTable)
+        ..where((t) =&gt;
+            t.type.equals(type) &amp;
+            t.language.equals(language) &amp;
+            t.isAttempted.equals(<span class="hljs-keyword">false</span>))
+        ..orderBy([(t) =&gt; OrderingTerm.asc(t.sampleNumber)])
+        ..limit(limit))
+      .<span class="hljs-keyword">get</span>();
+}
+</div></code></pre>
+<p>Ça ressemble à du SQL mais c'est du Dart pur. Le compilateur vérifie les types.</p>
+<h3 id="les-migrations">Les migrations</h3>
+<p>Quand tu ajoutes une table après avoir déjà installé l'app, SQLite ne la crée pas automatiquement. Il faut gérer les migrations :</p>
+<pre class="hljs"><code><div><span class="hljs-meta">@override</span>
+<span class="hljs-built_in">int</span> <span class="hljs-keyword">get</span> schemaVersion =&gt; <span class="hljs-number">8</span>;
+
+<span class="hljs-meta">@override</span>
+MigrationStrategy <span class="hljs-keyword">get</span> migration =&gt; MigrationStrategy(
+      onCreate: (m) =&gt; m.createAll(), <span class="hljs-comment">// première installation</span>
+      onUpgrade: (m, from, to) <span class="hljs-keyword">async</span> {
+        <span class="hljs-keyword">if</span> (from &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">await</span> m.createTable(municipalityTable);
+        <span class="hljs-keyword">if</span> (from &lt; <span class="hljs-number">3</span>) <span class="hljs-keyword">await</span> m.createTable(instituteTable);
+        <span class="hljs-comment">// ...</span>
+      },
+    );
+</div></code></pre>
+<p>À chaque fois que tu ajoutes une table, tu incrémentes <code>schemaVersion</code> et tu ajoutes une condition. Si quelqu'un a l'app depuis la version 3 et passe à la version 8, toutes les conditions entre 3 et 8 s'exécutent dans l'ordre.</p>
+<h3 id="le-provider-riverpod-pour-la-base">Le provider Riverpod pour la base</h3>
+<p>Pour que n'importe quel écran puisse accéder à la base, on crée un provider :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">final</span> databaseProvider = Provider&lt;AppDatabase&gt;((ref) {
+  <span class="hljs-keyword">final</span> db = AppDatabase();
+  ref.onDispose(db.close);
+  <span class="hljs-keyword">return</span> db;
+});
+</div></code></pre>
+<p><code>ref.onDispose</code> ferme proprement la connexion quand le provider est détruit. Dans les widgets, on y accède avec <code>ref.read(databaseProvider)</code>.</p>
+<hr>
+<h2 id="la-navigation-avec-go_router">La navigation avec go_router</h2>
+<p>go_router fonctionne avec des routes nommées comme des URLs :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">final</span> appRouter = GoRouter(
+  initialLocation: <span class="hljs-string">&#x27;/login&#x27;</span>,
+  routes: [
+    GoRoute(path: <span class="hljs-string">&#x27;/login&#x27;</span>, builder: (_, __) =&gt; <span class="hljs-keyword">const</span> LoginScreen()),
+    GoRoute(path: <span class="hljs-string">&#x27;/home&#x27;</span>, builder: (_, __) =&gt; <span class="hljs-keyword">const</span> HomeScreen()),
+    GoRoute(
+      path: <span class="hljs-string">&#x27;/assessment/child&#x27;</span>,
+      builder: (context, state) =&gt; SelectChildScreen(
+        schoolId: state.extra <span class="hljs-keyword">as</span> <span class="hljs-built_in">String</span>,
+      ),
+    ),
+  ],
+);
+</div></code></pre>
+<p>Pour naviguer en passant des données :</p>
+<pre class="hljs"><code><div>context.push(<span class="hljs-string">&#x27;/assessment/child&#x27;</span>, extra: schoolId);
+</div></code></pre>
+<p><code>state.extra</code> récupère ce qu'on a passé. Le <code>as String</code> est un cast — si tu passes autre chose qu'un String, tu auras une erreur à l'exécution. C'est utile pour les données simples comme des IDs.</p>
+<p>La différence entre <code>context.go()</code> et <code>context.push()</code> : <code>go()</code> remplace toute la pile de navigation (comme rediriger), <code>push()</code> empile par-dessus (comme ouvrir une nouvelle page).</p>
+<hr>
+<h2 id="lauthentification">L'authentification</h2>
+<p>L'écran de connexion vérifie les identifiants contre la table <code>CrlTable</code> en local :</p>
+<pre class="hljs"><code><div>Future&lt;<span class="hljs-keyword">void</span>&gt; _onLogin() <span class="hljs-keyword">async</span> {
+  <span class="hljs-keyword">final</span> db = ref.read(databaseProvider);
+  <span class="hljs-keyword">final</span> crl = <span class="hljs-keyword">await</span> db.checkCredentials(username, password);
+
+  <span class="hljs-keyword">if</span> (crl != <span class="hljs-keyword">null</span>) {
+    <span class="hljs-keyword">final</span> prefs = <span class="hljs-keyword">await</span> SharedPreferences.getInstance();
+    <span class="hljs-keyword">await</span> prefs.setString(<span class="hljs-string">&#x27;crlId&#x27;</span>, crl.crlId);
+    <span class="hljs-keyword">await</span> prefs.setString(<span class="hljs-string">&#x27;crlName&#x27;</span>, <span class="hljs-string">&#x27;<span class="hljs-subst">${crl.firstName}</span> <span class="hljs-subst">${crl.lastName ?? <span class="hljs-string">&#x27;&#x27;</span>}</span>&#x27;</span>);
+    context.go(<span class="hljs-string">&#x27;/home&#x27;</span>);
+  } <span class="hljs-keyword">else</span> {
+    _showError(<span class="hljs-string">&#x27;Identifiants incorrects.&#x27;</span>);
+  }
+}
+</div></code></pre>
+<p><strong>SharedPreferences</strong> c'est un stockage clé-valeur persistant. On y sauvegarde l'ID de l'utilisateur connecté pour s'en souvenir sans rouvrir la base à chaque fois.</p>
+<h3 id="lanimation-de-secousse">L'animation de secousse</h3>
+<p>Quand les identifiants sont faux, la carte se secoue. C'est fait avec un <code>AnimationController</code> et <code>math.sin()</code> :</p>
+<pre class="hljs"><code><div>_shakeController = AnimationController(
+  vsync: <span class="hljs-keyword">this</span>,
+  duration: <span class="hljs-keyword">const</span> <span class="hljs-built_in">Duration</span>(milliseconds: <span class="hljs-number">500</span>),
+);
+
+<span class="hljs-comment">// Dans le build :</span>
+<span class="hljs-keyword">final</span> offset = math.sin(_shakeAnimation.value * math.pi * <span class="hljs-number">4</span>) * <span class="hljs-number">8</span>;
+<span class="hljs-keyword">return</span> Transform.translate(offset: Offset(offset, <span class="hljs-number">0</span>), child: child);
+</div></code></pre>
+<p><code>math.sin()</code> génère une oscillation entre -1 et 1. On multiplie par 8 pour avoir des pixels. Le <code>* 4</code> accélère les cycles pour que ça fasse 4 allers-retours en 500ms.</p>
+<hr>
+<h2 id="le-téléchargement-initial-des-données">Le téléchargement initial des données</h2>
+<p>Avant de pouvoir travailler, l'évaluateur doit télécharger les données depuis le serveur : son compte, les communes, les établissements, les écoles, les enfants, et les outils de test.</p>
+<p><code>PullCrlService</code> fait tous ces appels API avec Dio :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">final</span> response = <span class="hljs-keyword">await</span> _dio.<span class="hljs-keyword">get</span>(ApiConstants.getAserSamples);
+<span class="hljs-keyword">final</span> <span class="hljs-built_in">List</span> data = response.data[<span class="hljs-string">&#x27;data&#x27;</span>];
+</div></code></pre>
+<p><code>response.data</code> contient directement l'objet Dart parsé depuis le JSON. Dio s'occupe de la désérialisation.</p>
+<p>Chaque item est ensuite inséré en base avec <code>insertOnConflictUpdate</code> — si l'item existe déjà, il est mis à jour, sinon créé. C'est l'équivalent d'un <code>UPSERT</code> en SQL.</p>
+<h3 id="un-bug-qui-ma-pris-du-temps">Un bug qui m'a pris du temps</h3>
+<p>L'API retourne le type <code>&quot;Non-word&quot;</code> avec un <code>w</code> minuscule. J'avais codé <code>&quot;Non-Word&quot;</code> avec un <code>W</code> majuscule dans mon app. Résultat : zéro items chargés pour ce niveau, sans aucune erreur. Ce genre de bug est invisible parce qu'il ne plante pas, il retourne juste une liste vide.</p>
+<p>La leçon : toujours vérifier les données brutes de l'API avec un outil comme curl ou Postman avant d'écrire le code qui les consomme.</p>
+<hr>
+<h2 id="le-flux-dévaluation">Le flux d'évaluation</h2>
+<p>Le flux de navigation pour commencer une évaluation :</p>
+<pre class="hljs"><code><div>Commune → Établissement → École → Enfant → Test
+</div></code></pre>
+<p>Chaque écran reçoit l'ID du niveau supérieur via <code>state.extra</code> et charge ses données depuis la base locale.</p>
+<h3 id="sélection-de-lenfant-et-création-de-session">Sélection de l'enfant et création de session</h3>
+<p>Sur l'écran de sélection de l'enfant, on choisit la langue du test (Wolof, Peulh, Serere), et on crée une session :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">final</span> examId = <span class="hljs-string">&#x27;<span class="hljs-subst">${crlId}</span>_<span class="hljs-subst">${student.studentId}</span>_<span class="hljs-subst">${DateTime.now().millisecondsSinceEpoch}</span>&#x27;</span>;
+
+<span class="hljs-keyword">await</span> db.insertSession(StudentSessionTableCompanion(
+  examId: Value(examId),
+  studId: Value(student.studentId),
+  crlId: Value(crlId),
+  childFullName: Value(student.studentName),
+  language: Value(selectedLanguage),
+  startTime: Value(<span class="hljs-built_in">DateTime</span>.now().toIso8601String()),
+));
+
+<span class="hljs-keyword">await</span> prefs.setString(<span class="hljs-string">&#x27;currentLevel&#x27;</span>, <span class="hljs-string">&#x27;Letter&#x27;</span>);
+context.push(<span class="hljs-string">&#x27;/assessment/test&#x27;</span>, extra: examId);
+</div></code></pre>
+<p>L'<code>examId</code> est une clé unique composée de l'ID du CRL + ID de l'enfant + timestamp. On le sauvegarde en base et on le passe à l'écran de test.</p>
+<hr>
+<h2 id="lécran-de-test">L'écran de test</h2>
+<p>C'est l'écran le plus complexe. Il gère 4 niveaux dans l'ordre :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> _levelOrder = [<span class="hljs-string">&#x27;Letter&#x27;</span>, <span class="hljs-string">&#x27;Word&#x27;</span>, <span class="hljs-string">&#x27;Non-word&#x27;</span>, <span class="hljs-string">&#x27;Passage&#x27;</span>];
+<span class="hljs-keyword">const</span> _levelLimits = {<span class="hljs-string">&#x27;Letter&#x27;</span>: <span class="hljs-number">9</span>, <span class="hljs-string">&#x27;Word&#x27;</span>: <span class="hljs-number">11</span>, <span class="hljs-string">&#x27;Non-word&#x27;</span>: <span class="hljs-number">11</span>, <span class="hljs-string">&#x27;Passage&#x27;</span>: <span class="hljs-number">1</span>};
+</div></code></pre>
+<p>Pour chaque niveau, on charge les items depuis la base, on les affiche un par un, l'évaluateur enregistre la lecture de l'enfant, puis note la réponse.</p>
+<h3 id="le-système-de-notation">Le système de notation</h3>
+<p>Trois valeurs possibles :</p>
+<ul>
+<li><code>2</code> → correct</li>
+<li><code>1</code> → faux</li>
+<li><code>9</code> → pas de réponse</li>
+</ul>
+<p>En base, on stocke <code>-1</code> comme valeur initiale (non tenté). Quand on récupère les réponses pour calculer le score, on filtre sur <code>isAttempted = true</code>.</p>
+<h3 id="lenregistrement-audio">L'enregistrement audio</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">final</span> recorder = Record();
+
+Future&lt;<span class="hljs-keyword">void</span>&gt; _startRecording(<span class="hljs-built_in">String</span> path) <span class="hljs-keyword">async</span> {
+  <span class="hljs-keyword">await</span> recorder.start(path: path, encoder: AudioEncoder.aacLc);
+}
+
+Future&lt;<span class="hljs-keyword">void</span>&gt; _stopRecording() <span class="hljs-keyword">async</span> {
+  <span class="hljs-keyword">await</span> recorder.stop();
+}
+</div></code></pre>
+<p>Le chemin du fichier audio : <code>{documentsDir}/{examId}/{examId}_{itemId}.m4a</code></p>
+<p>On sauvegarde ce chemin dans la base avec la réponse. Plus tard, quand on crée le ZIP pour l'upload, on retrouve le fichier par son chemin.</p>
+<h3 id="un-plugin-qui-ne-fonctionnait-pas">Un plugin qui ne fonctionnait pas</h3>
+<p>Après avoir ajouté <code>record</code> dans <code>pubspec.yaml</code>, j'obtenais <code>MissingPluginException</code> au lancement. Le plugin natif Android n'était pas enregistré.</p>
+<p>Solution : désinstaller complètement l'app du téléphone et réinstaller. Flutter n'effectue pas toujours une réinstallation complète lors du hot reload ou même d'un simple <code>flutter run</code> si l'app était déjà installée.</p>
+<pre class="hljs"><code><div>adb uninstall com.baamtu.pratham_clone
+flutter run
+</div></code></pre>
+<h3 id="la-progression-entre-niveaux">La progression entre niveaux</h3>
+<p>Quand tous les items d'un niveau sont traités, on passe au suivant. La méthode <code>_nextLevel()</code> recharge les items du prochain niveau depuis la base et réinitialise l'index courant. Si on est au dernier niveau, on clôture la session.</p>
+<hr>
+<h2 id="la-synchronisation-avec-le-serveur">La synchronisation avec le serveur</h2>
+<h3 id="construction-du-zip">Construction du ZIP</h3>
+<p>Pour chaque session à envoyer, on crée un ZIP qui contient :</p>
+<ul>
+<li>Un fichier JSON avec les métadonnées de la session et toutes les réponses</li>
+<li>Les fichiers audio M4A correspondant à chaque enregistrement</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">final</span> encoder = ZipEncoder();
+<span class="hljs-keyword">final</span> archive = Archive();
+
+<span class="hljs-keyword">final</span> jsonBytes = utf8.encode(jsonEncode(sessionJson));
+archive.addFile(
+  ArchiveFile(<span class="hljs-string">&#x27;<span class="hljs-subst">$examId</span>/<span class="hljs-subst">${examId}</span>INFO.json&#x27;</span>, jsonBytes.length, jsonBytes),
+);
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">final</span> answer <span class="hljs-keyword">in</span> answers) {
+  <span class="hljs-keyword">final</span> audioFile = File(answer.recordingName!);
+  <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">await</span> audioFile.exists()) <span class="hljs-keyword">continue</span>;
+  <span class="hljs-keyword">final</span> audioBytes = <span class="hljs-keyword">await</span> audioFile.readAsBytes();
+  <span class="hljs-keyword">final</span> filename = audioFile.path.split(<span class="hljs-string">&#x27;/&#x27;</span>).last;
+  archive.addFile(
+    ArchiveFile(<span class="hljs-string">&#x27;<span class="hljs-subst">$examId</span>/<span class="hljs-subst">$filename</span>&#x27;</span>, audioBytes.length, audioBytes),
+  );
+}
+
+<span class="hljs-keyword">return</span> encoder.encode(archive)!;
+</div></code></pre>
+<h3 id="lupload-multipart">L'upload multipart</h3>
+<p>Le ZIP est envoyé comme fichier dans un formulaire multipart :</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">final</span> formData = FormData.fromMap({
+  <span class="hljs-string">&#x27;zipfile&#x27;</span>: <span class="hljs-keyword">await</span> MultipartFile.fromFile(
+    zipFile.path,
+    filename: <span class="hljs-string">&#x27;<span class="hljs-subst">${session.examId}</span>.zip&#x27;</span>,
+  ),
+});
+
+<span class="hljs-keyword">final</span> response = <span class="hljs-keyword">await</span> _dio.post(
+  ApiConstants.pushZipFiles,
+  data: formData,
+);
+</div></code></pre>
+<p>Si le serveur répond avec <code>status: 'success'</code>, on marque la session comme envoyée en base pour ne pas la renvoyer.</p>
+<hr>
+<h2 id="le-design-de-linterface">Le design de l'interface</h2>
+<h3 id="le-thème-global">Le thème global</h3>
+<p>Tout le thème est défini dans <code>lib/core/theme.dart</code>. On y déclare les couleurs :</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppColors</span> </span>{
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> primary = Color(<span class="hljs-number">0xFF0362A0</span>);
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> error = Color(<span class="hljs-number">0xFFD0021B</span>);
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> textDark = Color(<span class="hljs-number">0xFF292929</span>);
+  <span class="hljs-comment">// ...</span>
+}
+</div></code></pre>
+<p>Et le <code>ThemeData</code> de MaterialApp avec les styles par défaut des boutons, champs de texte, cartes. L'avantage : on change la couleur primaire à un seul endroit et ça se propage partout.</p>
+<h3 id="le-fond-de-lécran-de-connexion">Le fond de l'écran de connexion</h3>
+<p>Un <code>Stack</code> avec plusieurs couches :</p>
+<ol>
+<li>Un <code>Container</code> avec <code>LinearGradient</code> (bleu foncé vers bleu clair)</li>
+<li>Des <code>Container</code> en cercles positionnés avec <code>Positioned</code> pour la décoration</li>
+<li>Un <code>CustomPainter</code> qui dessine une grille de petits points</li>
+</ol>
+<p><code>CustomPainter</code> c'est la façon de dessiner librement sur le canvas en Flutter. Il suffit d'implémenter la méthode <code>paint(Canvas canvas, Size size)</code>.</p>
+<h3 id="les-champs-de-saisie-animés">Les champs de saisie animés</h3>
+<p>Chaque champ de texte est enveloppé dans un <code>AnimatedContainer</code> qui change de bordure et de couleur de fond selon le focus :</p>
+<pre class="hljs"><code><div>Focus(
+  onFocusChange: (focused) =&gt; setState(() =&gt; _isFocused = focused),
+  child: AnimatedContainer(
+    duration: <span class="hljs-keyword">const</span> <span class="hljs-built_in">Duration</span>(milliseconds: <span class="hljs-number">200</span>),
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: _isFocused ? AppColors.primary : AppColors.border,
+        width: _isFocused ? <span class="hljs-number">2</span> : <span class="hljs-number">1.5</span>,
+      ),
+    ),
+    child: TextField(...),
+  ),
+)
+</div></code></pre>
+<p><code>AnimatedContainer</code> interpole automatiquement entre les valeurs de décoration quand elles changent. Pas besoin d'<code>AnimationController</code>.</p>
+<h3 id="le-texte-en-dégradé">Le texte en dégradé</h3>
+<p>Pour le titre &quot;ReadNet&quot; avec un dégradé de couleur :</p>
+<pre class="hljs"><code><div>ShaderMask(
+  shaderCallback: (bounds) =&gt; <span class="hljs-keyword">const</span> LinearGradient(
+    colors: [Color(<span class="hljs-number">0xFF0362A0</span>), Color(<span class="hljs-number">0xFF0484D8</span>)],
+  ).createShader(bounds),
+  child: Text(
+    <span class="hljs-string">&#x27;ReadNet&#x27;</span>,
+    style: TextStyle(color: Colors.white), <span class="hljs-comment">// le blanc est remplacé par le shader</span>
+  ),
+)
+</div></code></pre>
+<p><code>ShaderMask</code> applique un shader graphique sur son enfant. La couleur <code>Colors.white</code> du texte sert de &quot;masque&quot; — le shader remplace le blanc par le dégradé.</p>
+<hr>
+<h2 id="les-galères-quon-a-rencontrées">Les galères qu'on a rencontrées</h2>
+<p><strong>Version de <code>record</code> incompatible.</strong> La version 5.x du package <code>record</code> avait cassé son API sur Linux. On a rétrogradé à la version 4.4.4 et changé <code>AudioRecorder()</code> en <code>Record()</code>.</p>
+<p><strong>Un seul item affiché par niveau.</strong> La requête Drift avait un filtre <code>sampleNumber.equals(1)</code> hérité d'une ancienne logique. Elle retournait toujours le premier item au lieu de tous les items. Suppression du filtre + ajout d'un <code>limit</code> en paramètre.</p>
+<p><strong>Overflow sur l'écran de connexion.</strong> Le texte &quot;Première utilisation ? S'enregistrer&quot; dépassait la largeur disponible. Solution : <code>width: double.infinity</code> sur le container + <code>Flexible</code> + <code>TextOverflow.ellipsis</code> sur le texte.</p>
+<p><strong><code>path_provider</code> déclaré deux fois dans <code>pubspec.yaml</code>.</strong> Le package <code>record</code> l'inclut déjà comme dépendance. Déclarer les deux créait un conflit de version. Suppression de la ligne dupliquée.</p>
+<hr>
+<h2 id="ce-que-je-retiens">Ce que je retiens</h2>
+<p>Flutter n'est pas compliqué mais il a sa propre logique. Les points qui m'ont le plus pris de temps à comprendre :</p>
+<p><strong>Les widgets sont immuables.</strong> Un <code>StatelessWidget</code> ne peut pas changer après sa création. Pour un état qui change, on utilise <code>StatefulWidget</code> avec <code>setState()</code>. Pour un état partagé entre plusieurs écrans, on utilise Riverpod.</p>
+<p><strong>build_runner est obligatoire pour Drift.</strong> Chaque modification de table nécessite de relancer <code>flutter pub run build_runner build</code>. Si tu oublies, le code compilé ne correspond plus aux tables définies.</p>
+<p><strong>Le hot reload ne réinstalle pas les plugins natifs.</strong> Quand tu ajoutes un package qui a du code natif Android (comme <code>record</code>), il faut désinstaller et réinstaller l'app complètement.</p>
+<p><strong>Les types de l'API sont des contrats.</strong> Si l'API retourne <code>&quot;Non-word&quot;</code> et que tu codes <code>&quot;Non-Word&quot;</code>, zéro résultat sans erreur. Toujours vérifier les données brutes.</p>
+<hr>
+<p><em>Projet : ReadNet Flutter — Sénégal 2024</em></p>
+
+</body>
+</html>

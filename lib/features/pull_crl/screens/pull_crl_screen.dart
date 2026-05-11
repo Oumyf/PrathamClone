@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pratham_clone/core/theme.dart';
 import 'package:pratham_clone/data/database/app_database.dart';
 import 'package:pratham_clone/data/database/database_provider.dart';
+import 'package:pratham_clone/data/database/tables/aser_tool_table.dart';
 import 'package:pratham_clone/data/database/tables/municipality_table.dart';
 import 'package:pratham_clone/data/models/department_model.dart';
 import 'package:pratham_clone/data/models/municipality_model.dart';
@@ -103,6 +104,19 @@ class _PullCrlScreenState extends ConsumerState<PullCrlScreen> {
         municipalities: selectedMunicipalities,
         onProgress: (message) {
           if (mounted) setState(() => _progressMessage = message);
+        },
+        onAserSamplesReady: (samples) async {
+          if (mounted) setState(() => _progressMessage = 'Sauvegarde des outils ASER...');
+          for (final s in samples) {
+            await db.insertAserTool(AserToolTableCompanion(
+              id: Value(s['id'].toString()),
+              data: Value(s['sample_text']?.toString() ?? ''),
+              type: Value(s['sample_type']?.toString() ?? ''),
+              language: Value(s['language']?.toString() ?? ''),
+              sampleNumber: Value(s['sample_number'] as int? ?? 1),
+              year: Value(s['year']?.toString() ?? '2024'),
+            ));
+          }
         },
         onCrlsReady: (crls) async {
           for (final crl in crls) {
